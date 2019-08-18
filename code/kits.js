@@ -16,4 +16,9 @@ kits.formatDate = function () {
   return nowYear + '-' + nowMonth + '-' + nowDay + ' ' + nowHours + ':' + nowMinutes + ':' + nowSeconds;
 }
 
+// 获取ID
+kits.getID = function () {
+
+}
+
 // 获取随机数
