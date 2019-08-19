@@ -239,10 +239,11 @@
       ul.removeChild(event.target.parentNode);
       // 到这里只是删除了页面上的li标签，并没有删除掉本地存储中的数据，刷新之后删除的数据还是在
       // 根据id删除本地数据
+      // 给标签加上自定义属性来存取id
       // 获取点击的span的id
       let id = event.target.dataset.id;
-      // console.log(id);
-      
+      console.log(id);
+
     }
   });
 </script>
