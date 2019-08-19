@@ -17,6 +17,17 @@ kits.formatDate = function () {
 }
 
 // 获取ID
-
+// 常见的获取id的方法是  时间戳 + 足够大的随机数
+// 该方法返回一个不容易重复的id
+kits.getID = function () {
+  let date = new Date();
+  // 得到从1970 .01 .01 到现在的毫秒总数
+  let time = date.getTime();
+  // 得到一个足够大的随机数
+  let rand = this.randomInt(100000, 999999);
+  // 把两个数字加起来作为id
+  let id = time + rand;
+  return id;
+}
 
 // 获取随机数
