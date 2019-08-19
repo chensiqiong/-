@@ -17,8 +17,6 @@ kits.formatDate = function () {
 }
 
 // 获取ID
-kits.getID = function () {
 
-}
 
 // 获取随机数
