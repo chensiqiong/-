@@ -142,7 +142,7 @@
     // 生成一个标签结构，覆盖新生成的li
     let time = kits.formatDate();
     newLi.innerHTML = '<p class="content">' + e.content + '</p>' +
-      '<span class="del">&nbsp;&nbsp;&nbsp;&nbsp;删除</span>' +
+      '<span class="del" data-id="' + e.id + '">&nbsp;&nbsp;&nbsp;&nbsp;删除</span>' +
       '<span class="time">' + e.time + '</span>';
     // 将li标签追加的页面中
     ul.appendChild(newLi);
@@ -167,9 +167,10 @@
     let newLi = document.createElement('li');
     // 生成一个标签结构，覆盖新生成的li
     let time = kits.formatDate();
+    let id = kits.getID();
     newLi.innerHTML = '<p class="content">' + content + '</p>' +
-      '<span class="del">&nbsp;&nbsp;&nbsp;&nbsp;删除</span>' +
-      '<span class="time">' + time + '</span>';
+      '<span class="del" data-id="' + id + '">&nbsp;&nbsp;&nbsp;&nbsp;删除</span>' + '<span class="time">' + time +
+      '</span>';
     // 将新生成的标签插入第一个
     ul.insertBefore(newLi, ul.children[0]);
 
@@ -189,6 +190,7 @@
     */
     // 声明对象存放文本内容和发布时间
     let obj = {
+      id: id,
       content: content,
       time: time
     };
@@ -208,13 +210,39 @@
 
   // 删除功能
   // 获取span标签
+  // let delBtn = document.querySelector('.weibo-list span');
+  // // 给删除按钮注册点击事件
+  // ul.addEventListener('click', function (event) {
+  //   // 判断点击的是否是span标签
+  //   if (event.target.nodeName === 'SPAN') {
+  //     // 委托ul删除li标签
+  //     ul.removeChild(event.target.parentNode);
+  //   }
+  // });
+  // 这样的删除方法不能删除本地存储的数据，刷新之后删除的数据还是一样会显示出来
+  // 删除本地数据
+  /*
+    当我们点击删除的时候，就把该条内容删除，并且本地数据中的也要一起删除
+    那么怎么样可以判断出点击的删除是哪条内容的删除？  根据id查找
+      给每个本地存储的数据都加一个id，当点击某个删除的时候获取到这个删除对应的id，再根据id从本地存储中把这条数据删除
+      
+  */
+  // 获取元素
   let delBtn = document.querySelector('.weibo-list span');
-  // 给删除按钮注册点击事件
+  // 注册事件
+  // 因为li标签是动态生成的，可能一开始没有，所以我们可以使用事件委托，让一开始就存在的元素删除
+  // delBtn.onclick=function(){}
   ul.addEventListener('click', function (event) {
-    // 判断点击的是否是span标签
-    if (event.target.nodeName === 'SPAN') {
-      // 委托ul删除li标签
+    // 判断点击的是不是span
+    if (event.target.classList.contains('del')) {
+      // 委托ul删除span的父节点li
       ul.removeChild(event.target.parentNode);
+      // 到这里只是删除了页面上的li标签，并没有删除掉本地存储中的数据，刷新之后删除的数据还是在
+      // 根据id删除本地数据
+      // 获取点击的span的id
+      let id = event.target.dataset.id;
+      // console.log(id);
+      
     }
   });
 </script>
