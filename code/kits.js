@@ -15,6 +15,11 @@ kits.formatDate = function () {
   let nowSeconds = date.getSeconds() < 10 ? '0' + (date.getSeconds()) : date.getSeconds();
   return nowYear + '-' + nowMonth + '-' + nowDay + ' ' + nowHours + ':' + nowMinutes + ':' + nowSeconds;
 }
+// 获取随机整数
+kits.randomInt = function (n, m) {
+  return Math.floor(Math.random() * (m - n + 1) + n);
+}
+
 
 // 获取ID
 // 常见的获取id的方法是  时间戳 + 足够大的随机数
@@ -26,7 +31,7 @@ kits.getID = function () {
   // 得到一个足够大的随机数
   let rand = this.randomInt(100000, 999999);
   // 把两个数字加起来作为id
-  let id = time + rand;
+  let id = time + rand + '';
   return id;
 }
 
