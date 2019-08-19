@@ -83,16 +83,9 @@
     <input class="weibo-btn" value="发布" type="button">
     <ul class="weibo-list">
       <!-- <li>
-        <p>快来收了这九款用上就停不下来的应用吧！！</p>
-        <span>删除</span>
-      </li>
-      <li>
-        <p>超级详细的云南大理自助游攻略</p>
-        <span>删除</span>
-      </li>
-      <li>
-        <p>外国最近很火的舞蹈，舒服简单自然，太棒了！</p>
-        <span>删除</span>
+        <p class="content">快来收了这九款用上就停不下来的应用吧！！</p>
+        <span class="time"></span>
+        <span class="del">删除</span>
       </li> -->
     </ul>
   </div>
@@ -133,8 +126,34 @@
   let text = document.querySelector('.weibo-text');
   let btn = document.querySelector('.weibo-btn');
   let ul = document.querySelector('.weibo-list');
+
+  // 从本地存储中获得数据
+  let datas = localStorage.getItem('weibo-datas');
+  // 将json类型的数据转成数组类型
+  datas = JSON.parse(datas);
+  // console.log(datas);
+  // 判断数组中一开始是否有数据，如果有偶数据就把这些数据重新赋值，如果没有，datas就是一个空数组
+  datas = datas || [];
+  console.log(datas);
+  // 遍历datas，把数组中的数据添加到页面上
+  datas.forEach(function (e, i) {
+    // 生成一个新的li标签，现在不能把原来的结构覆盖
+    let newLi = document.createElement('li');
+    // 生成一个标签结构，覆盖新生成的li
+    let time = kits.formatDate();
+    newLi.innerHTML = '<p class="content">' + e.content + '</p>' +
+      '<span class="del">&nbsp;&nbsp;&nbsp;&nbsp;删除</span>' +
+      '<span class="time">' + e.time + '</span>';
+    // 将li标签追加的页面中
+    ul.appendChild(newLi);
+  });
+
+
   // 声明一个数组用来存数据
-  let datas = [];
+  // let datas = [];
+
+
+
   // 给发布按钮注册点击事件
   btn.onclick = function () {
     // 获取文本框内容，表单元素可以直接用属性value来获取文本
@@ -146,10 +165,11 @@
     }
     // 生成一个新的li标签，现在不能把原来的结构覆盖
     let newLi = document.createElement('li');
-    let time = kits.formatDate();
     // 生成一个标签结构，覆盖新生成的li
-    newLi.innerHTML = '<p>' + content + '</p>' + '<span>&nbsp;&nbsp;&nbsp;&nbsp;删除</span>' + '<span>' + time +
-      '</span>';
+    let time = kits.formatDate();
+    newLi.innerHTML = '<p class="content">' + content + '</p>' +
+      '<span class="del">&nbsp;&nbsp;&nbsp;&nbsp;删除</span>' +
+      '<span class="time">' + time + '</span>';
     // 将新生成的标签插入第一个
     ul.insertBefore(newLi, ul.children[0]);
 
@@ -178,11 +198,13 @@
     // console.log(datas);
     // 将数组转换成json格式后放入本地存储
     localStorage.setItem('weibo-datas', JSON.stringify(datas));
-    // 发现这样每次把新增的内容放到本地存储我们只能存到最新发布的数据
+    // 发现这样每次把新增的内容放到本地存储我们只能存到最新发布的数据，最好的办法是在一开始的时候，如果本地存储中有数据，先取出这些数据，然后和新增的数据一起列出来
+    // 回到一开始
+
+
     // 清除文本内容
     text.value = '';
   }
-
 
   // 删除功能
   // 获取span标签
