@@ -142,7 +142,7 @@
     // 生成一个标签结构，覆盖新生成的li
     let time = kits.formatDate();
     newLi.innerHTML = '<p class="content">' + e.content + '</p>' +
-      '<span class="del">&nbsp;&nbsp;&nbsp;&nbsp;删除</span>' +
+      '<span class="del" data-id="' + e.id + '">&nbsp;&nbsp;&nbsp;&nbsp;删除</span>' +
       '<span class="time">' + e.time + '</span>';
     // 将li标签追加的页面中
     ul.appendChild(newLi);
@@ -167,8 +167,9 @@
     let newLi = document.createElement('li');
     // 生成一个标签结构，覆盖新生成的li
     let time = kits.formatDate();
+    let id = kits.getID();
     newLi.innerHTML = '<p class="content">' + content + '</p>' +
-      '<span class="del">&nbsp;&nbsp;&nbsp;&nbsp;删除</span>' + '<span class="time">' + time +
+      '<span class="del" data-id="' + id + '">&nbsp;&nbsp;&nbsp;&nbsp;删除</span>' + '<span class="time">' + time +
       '</span>';
     // 将新生成的标签插入第一个
     ul.insertBefore(newLi, ul.children[0]);
@@ -189,6 +190,7 @@
     */
     // 声明对象存放文本内容和发布时间
     let obj = {
+      id: id,
       content: content,
       time: time
     };
@@ -236,6 +238,11 @@
       // 委托ul删除span的父节点li
       ul.removeChild(event.target.parentNode);
       // 到这里只是删除了页面上的li标签，并没有删除掉本地存储中的数据，刷新之后删除的数据还是在
+      // 根据id删除本地数据
+      // 获取点击的span的id
+      let id = event.target.dataset.id;
+      // console.log(id);
+      
     }
   });
 </script>
