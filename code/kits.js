@@ -35,4 +35,20 @@ kits.getID = function () {
   return id;
 }
 
-// 获取随机数
+//获取随机rgb格式的颜色
+kits.randomRGBColor = function () {
+  let r = kits.randomInt(0, 255);
+  let g = kits.randomInt(0, 255);
+  let b = kits.randomInt(0, 255);
+  return 'rgb(' + r + ',' + g + ',' + b + ')';
+}
+
+// 获取随机十六进制颜色
+kits.randomHexColor = function () {
+  let arrNum = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += arrNum[kits.randomInt(0, 15)];;
+  }
+  return color;
+}
