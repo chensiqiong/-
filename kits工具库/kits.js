@@ -52,3 +52,50 @@ kits.randomHexColor = function () {
   }
   return color;
 }
+
+
+
+// 将一个数组(arr) 以指定的键(key) 存储到localStorage里面
+kits.saveLocalDataArray = function (key, arr) {
+  let jsonStr = JSON.stringify(arr)
+  localStorage.setItem(key, jsonStr);
+}
+
+
+
+// 从localStorage里面根据指定的键(key) 获取一个数组
+kits.getLocalDataArray = function (key) {
+  let jsonStr = localStorage.getItem(key);
+  let arr = JSON.parse(jsonStr);
+  return arr || [];
+}
+
+
+// 向localStorage里面指定键(key) 的数组数据追加一个数据对象（ data）
+kits.appendDataIntoArray = function (key, data) {
+  let arr = this.getLocalDataArray(key);
+  arr.push(data);
+  kits.saveLocalDataArray(key, arr);
+}
+
+// 根据id修改localStorage里面的指定键(key) 的数组数据
+kits.modifyLocalDataById = function (key, id, data) {
+  let arr = this.getLocalDataArray(key);
+  arr.forEach((e, i) => {
+    if (e.id === id) {
+      arr[i] = data;
+    }
+  });
+  kits.saveLocalDataArray(key, arr);
+}
+
+// 根据对应的id从localStorage中指定键(key) 的数组中删除一条数据
+kits.deleteLocalDataById = function (key, id) {
+  let arr = this.getLocalDataArray(key);
+  arr.forEach((e, i) => {
+    if (e.id === id) {
+      arr.splice(i, 1);
+    }
+  });
+  kits.saveLocalDataArray(key, arr);
+}
